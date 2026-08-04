@@ -1,0 +1,574 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* MYOB brand palette — purple → magenta, with teal as the "source" color */
+    --background: 0 0% 100%;
+    --foreground: 270 20% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 270 20% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 270 20% 12%;
+
+    --primary: 275 100% 34%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 270 30% 96%;
+    --secondary-foreground: 275 40% 22%;
+
+    --muted: 270 25% 96%;
+    --muted-foreground: 270 8% 44%;
+
+    --accent: 278 100% 97%;
+    --accent-foreground: 275 100% 34%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 20% 90%;
+    --input: 270 20% 96%;
+    --ring: 275 90% 45%;
+
+    --radius: 0.75rem;
+
+    /* Brand anchors: source teal → MYOB purple → MYOB magenta (destination) */
+    --brand-teal: 195 85% 42%;
+    --brand-purple: 275 100% 34%;
+    --brand-violet: 291 84% 42%;
+    --brand-pink: 331 95% 48%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 270 20% 12%;
+    --sidebar-primary: 275 100% 34%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 270 30% 96%;
+    --sidebar-accent-foreground: 270 20% 12%;
+    --sidebar-border: 270 20% 90%;
+    --sidebar-ring: 275 90% 45%;
+
+    --chart-1: 275 100% 40%;
+    --chart-2: 195 85% 42%;
+    --chart-3: 331 95% 48%;
+    --chart-4: 142 70% 40%;
+    --chart-5: 25 95% 53%;
+
+    /* Motion system — Material 3 emphasized easing + spring */
+    --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+    --ease-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .dark {
+    --background: 270 30% 6%;
+    --foreground: 270 20% 96%;
+
+    --card: 270 25% 9%;
+    --card-foreground: 270 20% 96%;
+
+    --popover: 270 25% 9%;
+    --popover-foreground: 270 20% 96%;
+
+    --primary: 275 95% 68%;
+    --primary-foreground: 275 60% 12%;
+
+    --secondary: 270 20% 14%;
+    --secondary-foreground: 270 20% 92%;
+
+    --muted: 270 20% 13%;
+    --muted-foreground: 270 10% 62%;
+
+    --accent: 275 40% 17%;
+    --accent-foreground: 275 90% 80%;
+
+    --destructive: 0 63% 40%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 270 18% 18%;
+    --input: 270 18% 18%;
+    --ring: 275 95% 68%;
+
+    --brand-teal: 195 85% 55%;
+    --brand-purple: 275 95% 68%;
+    --brand-violet: 291 80% 62%;
+    --brand-pink: 331 90% 62%;
+
+    --sidebar-background: 270 30% 6%;
+    --sidebar-foreground: 270 20% 96%;
+    --sidebar-primary: 275 95% 68%;
+    --sidebar-primary-foreground: 275 60% 12%;
+    --sidebar-accent: 270 20% 14%;
+    --sidebar-accent-foreground: 270 20% 96%;
+    --sidebar-border: 270 18% 18%;
+    --sidebar-ring: 275 95% 68%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .google-card {
+    @apply bg-card border border-border/50 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:border-border;
+  }
+
+  .google-button-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-full font-medium text-sm transition-all duration-200 hover:shadow-lg hover:bg-primary/90 active:scale-95 focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .google-button-secondary {
+    @apply bg-secondary text-secondary-foreground border border-border px-6 py-3 rounded-full font-medium text-sm transition-all duration-200 hover:bg-secondary/80 hover:shadow-sm active:scale-95 focus:ring-2 focus:ring-ring focus:ring-offset-2;
+  }
+
+  .google-input {
+    @apply bg-input border border-border rounded-xl px-4 py-3 text-sm transition-all duration-200 focus:ring-2 focus:ring-ring focus:border-transparent placeholder:text-muted-foreground;
+  }
+
+  .google-surface {
+    @apply bg-card/50 backdrop-blur-sm border border-border/30 rounded-2xl;
+  }
+
+  /* Brand gradients — MYOB purple → magenta */
+  .gradient-text {
+    background-image: linear-gradient(
+      90deg,
+      hsl(var(--brand-purple)),
+      hsl(var(--brand-pink)) 50%,
+      hsl(var(--brand-purple))
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: gradient-pan 8s linear infinite;
+  }
+
+  .gradient-bg {
+    background-image: linear-gradient(135deg, hsl(var(--brand-purple)), hsl(var(--brand-pink)));
+  }
+
+  /* Full migration journey: source teal → MYOB purple → MYOB magenta */
+  .journey-gradient-bg {
+    background-image: linear-gradient(
+      90deg,
+      hsl(var(--brand-teal)),
+      hsl(var(--brand-purple)) 55%,
+      hsl(var(--brand-pink))
+    );
+  }
+
+  .google-gradient {
+    background-image: linear-gradient(
+      180deg,
+      hsl(var(--background)),
+      hsl(var(--accent) / 0.6) 50%,
+      hsl(var(--background))
+    );
+  }
+
+  /* Primary CTA — gradient, glow, lift, shine sweep on hover */
+  .premium-button {
+    position: relative;
+    overflow: hidden;
+    border: 0;
+    color: #fff;
+    background-image: linear-gradient(
+      115deg,
+      hsl(var(--brand-purple)),
+      hsl(var(--brand-violet)) 55%,
+      hsl(var(--brand-pink))
+    );
+    background-size: 160% auto;
+    background-position: left center;
+    box-shadow: 0 4px 20px -4px hsl(var(--brand-purple) / 0.45);
+    transition:
+      transform 0.25s var(--ease-emphasized),
+      box-shadow 0.25s var(--ease-emphasized),
+      background-position 0.45s var(--ease-emphasized);
+  }
+  .premium-button:hover {
+    transform: translateY(-2px);
+    background-position: right center;
+    box-shadow: 0 12px 32px -8px hsl(var(--brand-purple) / 0.55);
+  }
+  .premium-button:active {
+    transform: translateY(0) scale(0.98);
+  }
+  .premium-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 25%, rgba(255, 255, 255, 0.35) 50%, transparent 75%);
+    transform: translateX(-130%);
+    pointer-events: none;
+  }
+  .premium-button:hover::after {
+    animation: shine 0.9s var(--ease-decelerate);
+  }
+
+  /* Typography scale */
+  .google-display-large {
+    @apply text-5xl font-normal tracking-tight leading-tight;
+  }
+
+  .google-display-medium {
+    @apply text-4xl font-normal tracking-tight leading-tight;
+  }
+
+  .google-display-small {
+    @apply text-3xl font-normal tracking-tight leading-tight;
+  }
+
+  .google-headline-large {
+    @apply text-2xl font-normal tracking-tight leading-tight;
+  }
+
+  .google-headline-medium {
+    @apply text-xl font-normal tracking-tight leading-tight;
+  }
+
+  .google-title-large {
+    @apply text-lg font-medium tracking-tight leading-tight;
+  }
+
+  .google-body-large {
+    @apply text-base font-normal leading-relaxed;
+  }
+
+  .google-body-medium {
+    @apply text-sm font-normal leading-relaxed;
+  }
+
+  .google-label-large {
+    @apply text-sm font-medium tracking-wide;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Motion system
+--------------------------------------------------------------------------- */
+
+@keyframes google-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes google-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes google-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes google-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-google-fade-in {
+  animation: google-fade-in 0.4s var(--ease-decelerate) forwards;
+}
+
+.animate-google-scale-in {
+  animation: google-scale-in 0.3s var(--ease-decelerate) forwards;
+}
+
+.animate-google-slide-up {
+  animation: google-slide-up 0.4s var(--ease-decelerate) forwards;
+}
+
+.animate-google-shimmer {
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.08), transparent);
+  background-size: 200% 100%;
+  animation: google-shimmer 1.5s infinite;
+}
+
+.animate-delay-75 {
+  animation-delay: 75ms;
+}
+.animate-delay-150 {
+  animation-delay: 150ms;
+}
+.animate-delay-225 {
+  animation-delay: 225ms;
+}
+.animate-delay-300 {
+  animation-delay: 300ms;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes premium-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@keyframes shine {
+  to {
+    transform: translateX(130%);
+  }
+}
+
+/* Ambient hero blobs — slow organic drift */
+@keyframes blob-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(40px, -28px) scale(1.08);
+  }
+  66% {
+    transform: translate(-28px, 20px) scale(0.95);
+  }
+}
+
+/* Data packets travelling QuickBooks Desktop → MYOB in the hero */
+@keyframes data-flow {
+  0% {
+    left: 0%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+}
+
+/* Seamless marquee — track holds two identical lists, shifts by exactly one */
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(0.8);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s var(--ease-decelerate) forwards;
+}
+
+.animate-fade-in-delayed {
+  animation: fade-in-up 0.6s var(--ease-decelerate) 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
+}
+
+.animate-premium-shimmer {
+  animation: premium-shimmer 3s ease-in-out infinite;
+}
+
+.animate-blob-slow {
+  animation: blob-drift 16s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+
+.marquee-paused:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+  opacity: 0;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+  opacity: 0;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+  opacity: 0;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll-triggered reveals (used with app/components/scroll-reveal.tsx)
+--------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.7s var(--ease-decelerate),
+    transform 0.7s var(--ease-decelerate);
+  will-change: opacity, transform;
+}
+.reveal-up {
+  transform: translateY(28px);
+}
+.reveal-left {
+  transform: translateX(-28px);
+}
+.reveal-right {
+  transform: translateX(28px);
+}
+.reveal-scale {
+  transform: scale(0.94);
+}
+.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cascading children inside a revealed container: line draws, chips pop */
+.journey-line {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.4s var(--ease-emphasized) 0.15s;
+}
+.reveal-in .journey-line {
+  transform: scaleX(1);
+}
+.step-chip {
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  transition:
+    opacity 0.5s var(--ease-decelerate),
+    transform 0.5s var(--ease-spring);
+}
+.reveal-in .step-chip {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ---------------------------------------------------------------------------
+   Accessibility — collapse decorative motion for users who opt out
+--------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .step-chip,
+  .journey-line {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

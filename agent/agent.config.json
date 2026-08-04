@@ -1,0 +1,8 @@
+{
+  "appName": "MYOB Migration Portal",
+  "webAppUrl": "http://localhost:3000",
+  "jobToken": "demo-job-token-12345",
+  "useMockMode": false,
+  "qbFileOpenMode": "omDontCare",
+  "qbConnectionType": "ctLocalQBD"
+}
